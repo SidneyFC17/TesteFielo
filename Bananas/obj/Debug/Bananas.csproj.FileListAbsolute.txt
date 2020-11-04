@@ -1,0 +1,7 @@
+C:\Users\re035946\source\repos\Bananas\Bananas\obj\Debug\Bananas.csprojResolveAssemblyReference.cache
+C:\Users\re035946\source\repos\Bananas\Bananas\obj\Debug\Bananas.csproj.CoreCompileInputs.cache
+C:\Users\re035946\source\repos\Bananas\Bananas\bin\Debug\Bananas.exe.config
+C:\Users\re035946\source\repos\Bananas\Bananas\bin\Debug\Bananas.exe
+C:\Users\re035946\source\repos\Bananas\Bananas\bin\Debug\Bananas.pdb
+C:\Users\re035946\source\repos\Bananas\Bananas\obj\Debug\Bananas.exe
+C:\Users\re035946\source\repos\Bananas\Bananas\obj\Debug\Bananas.pdb
