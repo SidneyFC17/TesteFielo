@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Bananas
 {
-    class Program
+    public class Program
     {
         public static int[,] matriz;
         public static Dictionary<String, List<Coordenada>> mapPossiveisCaminhos;
@@ -12,6 +12,7 @@ namespace Bananas
 
         public static int linhas;
         public static int colunas;
+        public static bool verCaminhos;
 
         public class Caminho: IComparable<Caminho>
         {
@@ -62,6 +63,15 @@ namespace Bananas
 
         public static void Main(string[] args)
         {
+            verCaminhos = false;
+
+            Console.WriteLine("Você deseja ver todos os caminhos possíveis (S/N)?");
+            String res = Console.ReadLine();
+
+            if (res.Equals("S") || res.Equals("s")) {
+                verCaminhos = true;
+            }
+
             lstCaminho = new List<Caminho>();
             linhas = 0;
             colunas = 0;
@@ -82,6 +92,32 @@ namespace Bananas
                 }
             }
 
+            popularMapaPossiveisCaminhos();
+
+            Console.Clear();
+
+            Console.WriteLine("Estrutura: ");
+            for (int l = 0; l < linhas; l++){
+                for (int c = 0; c < colunas; c++){
+                    Console.Write("|" + matriz[l,c]+ "\t|");
+                }
+                Console.WriteLine();
+            }
+            
+            for (int l = 0; l < linhas; l++)
+            {
+                Coordenada cd = new Coordenada(l, 0);
+                gravarCaminhosPossiveis(cd, cd.ToString(), matriz[l,0]);
+            }
+
+            exibirMelhoresCaminhos();
+
+            Console.WriteLine("\n\n\nAperte [ENTER] para finalizar.");
+            Console.ReadLine();
+        }
+
+        public static void popularMapaPossiveisCaminhos()
+        {
             mapPossiveisCaminhos = new Dictionary<String, List<Coordenada>>();
 
             for (int l = 0; l < linhas; l++)
@@ -97,7 +133,7 @@ namespace Bananas
                     List<Coordenada> lstTemp;
 
                     mapPossiveisCaminhos.TryGetValue(chave, out lstTemp);
-                    lstTemp.Add(new Coordenada(l, (c+1)));
+                    lstTemp.Add(new Coordenada(l, (c + 1)));
                     mapPossiveisCaminhos[chave] = lstTemp;
 
                     if (l > 0)
@@ -115,41 +151,9 @@ namespace Bananas
                     }
                 }
             }
-
-            Console.Clear();
-            Console.WriteLine("Estrutura: ");
-            for (int l = 0; l < linhas; l++){
-                for (int c = 0; c < colunas; c++){
-                    Console.Write("|" + matriz[l,c]+ "\t|");
-                }
-                Console.WriteLine();
-            }
-            
-            for (int l = 0; l < linhas; l++)
-            {
-                Coordenada cd = new Coordenada(l, 0);
-                exibirCaminhosPossiveis(cd, cd.ToString(), matriz[l,0]);
-            }
-
-            lstCaminho.Sort();
-
-            Console.WriteLine("\nMelhore(s) caminho(s):");
-            int melhorRes;
-            int indice = 0;
-            do
-            {
-                melhorRes = lstCaminho[indice].valor;
-                Console.WriteLine(lstCaminho[indice].caminho + "=" + lstCaminho[indice].valor);
-                indice++;
-            } while (lstCaminho[indice].valor == melhorRes);
-
-
-
-            Console.WriteLine("\n\n\nAperte [ENTER] para finalizar.");
-            Console.ReadLine();
         }
 
-        public static void exibirCaminhosPossiveis(Coordenada cd, string caminho, int valor)
+        public static void gravarCaminhosPossiveis(Coordenada cd, string caminho, int valor)
         {
             List<Coordenada> lstTemp;
             mapPossiveisCaminhos.TryGetValue(cd.ToString(), out lstTemp);
@@ -162,16 +166,31 @@ namespace Bananas
                     int novoValor = valor + matriz[cds.linha, cds.coluna];
                     if (cds.coluna == (colunas-1)) {
                         lstCaminho.Add(new Caminho(novoCaminho, novoValor));
-                        
-                        Console.WriteLine(novoCaminho + ", " + novoValor);
-                        
+
+                        if (verCaminhos)
+                        {
+                            Console.WriteLine(novoCaminho + ", " + novoValor);
+                        }                        
                         continue;
                     }
-                    exibirCaminhosPossiveis(cds,novoCaminho,novoValor);
+                    gravarCaminhosPossiveis(cds,novoCaminho,novoValor);
                 }
             }
             return;
+        }
 
+        public static void exibirMelhoresCaminhos()
+        {
+            lstCaminho.Sort();
+            Console.WriteLine("\nMelhore(s) caminho(s):");
+            int melhorRes;
+            int indice = 0;
+            do
+            {
+                melhorRes = lstCaminho[indice].valor;
+                Console.WriteLine(lstCaminho[indice].caminho + " ---> \t" + lstCaminho[indice].valor);
+                indice++;
+            } while (indice < lstCaminho.Count && lstCaminho[indice].valor == melhorRes);
         }
     }
 }

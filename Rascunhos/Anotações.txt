@@ -1,0 +1,15 @@
+Olá, bem vindo a minha linha de pensamento.
+
+Comecei com alguns rascunhos no papel para entender melhor as possibilidades e tentar achar alguma fórmula.
+
+Já desenvolvi algo semelhante com uma árvore visual de hierarquia no Salesforce, 
+mapeava todos papéis do início ao fim, colocando um abaixo do outro até chegar ao último, 
+e também havia a possibilidade de um papel ter mais de uma ramificação.
+
+Assim achei melhor criar um mapa onde o chave é a posição da célula e seu valor é uma lista de possíveis destinos.
+
+Após isso pensei em um método recursivo que seu ciclo funcionaria até que não houvesse mais possíveis caminhos.
+
+
+E ao realizar os testes também percebi que no documento principal do teste há um erro, anexei um documento para uma melhor explicação.
+No primeiro exemplo também existem duas possibilidades de um melhor caminho, ambas com o mesmo resultado final.
